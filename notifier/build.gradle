@@ -1,0 +1,51 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 29
+    defaultConfig {
+        minSdkVersion 14
+        targetSdkVersion 29
+        versionCode 1
+        versionName rootProject.ext.libVersionName
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+}
+
+
+apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'com.jfrog.bintray'
+
+apply from: '../gradle/release.gradle'
+
+dependencies {
+    implementation 'androidx.annotation:annotation:1.1.0'
+    testImplementation 'junit:junit:4.12'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
+task deleteOldJar(type: Delete) {
+    delete 'release/android-notifier.jar'
+}
+
+task exportJar(type: Copy) {
+    from('build/intermediates/intermediate-jars/release/')
+    into('release/')
+    include('classes.jar')
+    rename('classes.jar', 'android-notifier.jar')
+}
+
+exportJar.dependsOn(deleteOldJar, build)
+
+
+
+

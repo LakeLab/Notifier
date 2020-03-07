@@ -1,0 +1,103 @@
+group = rootProject.ext.packageName
+version = rootProject.ext.libVersionName
+
+def siteUrl = 'https://github.com/LakeLab/Notifier'      // Homepage URL of the library
+def gitUrl = 'https://github.com/LakeLab/Notifier.git'
+
+install {
+    repositories.mavenInstaller {
+        pom.project {
+            name 'notifier'
+            description 'EASY notification library'
+            url siteUrl
+
+            packaging 'aar'
+            groupId rootProject.ext.packageName
+            artifactId rootProject.ext.libraryName
+            version rootProject.ext.libVersionName
+
+            licenses {
+                license {
+                    name 'The Apache Software License, Version 2.0'
+                    url 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+                }
+            }
+
+            scm {
+                connection gitUrl
+                developerConnection gitUrl
+                url siteUrl
+            }
+
+            developers {
+                developer {
+                    id 'LakeLab'
+                    name 'Kim Lake'
+                    email 'todaypoc@gmail.com'
+                }
+            }
+        }
+    }
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+afterEvaluate {
+    javadoc.classpath += project.android.libraryVariants.toList().first().javaCompile.classpath
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+if (project.rootProject.file('local.properties').isFile()) {
+    Properties properties = new Properties()
+    properties.load(project.rootProject.file('local.properties').newDataInputStream())
+    bintray {
+        user = properties.getProperty("bintray.user", '')
+        key = properties.getProperty("bintray.apikey", '')
+        configurations = ['archives']
+        publish = true
+
+        pkg {
+            repo = 'android'
+            name = 'notifier'
+            desc = 'EASY Android notification library'
+            licenses = ['Apache-2.0']
+
+            vcsUrl = gitUrl
+            websiteUrl = siteUrl
+            issueTrackerUrl = 'https://github.com/LakeLab/Notifier/issues'
+
+            labels = ['android', 'notification', 'library']
+            publicDownloadNumbers = false
+
+            githubRepo = 'LakeLab/Notifier'
+
+            version {
+                name = rootProject.ext.libVersionName // The name of your library project
+                desc = 'EASY Android notification library'
+                released = new Date()
+                vcsTag = rootProject.ext.libVersionName
+                gpg {
+                    sign = false
+                }
+            }
+        }
+    }
+}

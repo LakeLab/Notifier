@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">Notifier</string>
+    <string name="normal_notification_text">Normal notification</string>
+    <string name="custom_notification_text">Custom notification</string>
+    <string name="big_picture_notification_text">Big picture notification</string>
+    <string name="big_picture_notification_text_with_large_icon">Big picture notification with large icon</string>
+    <string name="inbox_notification">inbox notification</string>
+    <string name="big_text_notification_text">Big text notification</string>
+</resources>
