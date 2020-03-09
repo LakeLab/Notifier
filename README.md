@@ -118,6 +118,6 @@ Notifier.with(DEFAULT_CHANNEL_ID)
 
 ## To do
 
-[] Message style notification
-[] Notification Action
-[] Document for additional options
+[ ] Message style notification
+[ ] Notification Action
+[ ] Document for additional options
