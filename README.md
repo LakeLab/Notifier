@@ -16,7 +16,7 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.lakelab:notifier:0.0.1'
+    implementation 'com.lakelab:notifier:0.0.2'
 }
 ```
 
@@ -26,7 +26,7 @@ Or Maven:
 <dependency>
   <groupId>com.lakelab</groupId>
   <artifactId>notifier</artifactId>
-  <version>0.0.1</version>
+  <version>0.0.2</version>
   <type>pom</type>
 </dependency>
 ```
@@ -124,5 +124,4 @@ Notifier.setContext(context);
 ## To do
 
 * [ ] Message style notification.
-* [ ] Notification action.
 * [ ] Document for additional options.
