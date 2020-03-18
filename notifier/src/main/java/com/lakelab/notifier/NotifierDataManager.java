@@ -7,12 +7,14 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.os.Build;
 import android.service.notification.StatusBarNotification;
+import android.text.TextUtils;
+import android.widget.RemoteViews;
+
 import androidx.annotation.ColorInt;
+import androidx.annotation.DrawableRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
-import android.text.TextUtils;
-import android.widget.RemoteViews;
 
 import com.lakelab.notifier.impl.BaseImpl;
 import com.lakelab.notifier.impl.CompatOptionImpl;
@@ -99,6 +101,20 @@ class NotifierDataManager implements BaseImpl, RichImpl, OptionImpl, CompatOptio
     public CompatOptionImpl setBadgeIconTypeFromAPI26(@IconType int iconType) {
         if (Build.VERSION.SDK_INT >= 26) {
             builder.setBadgeIconType(iconType);
+        }
+        return this;
+    }
+
+    @Override
+    public CompatOptionImpl addActionFromAPI16(@DrawableRes int icon,
+                                               CharSequence title,
+                                               PendingIntent pendingIntent) {
+        if (Build.VERSION.SDK_INT >= 16) {
+            if (Build.VERSION.SDK_INT >= 20) {
+                builder.addAction(new Notification.Action(icon, title, pendingIntent));
+            } else {
+                builder.addAction(icon, title, pendingIntent);
+            }
         }
         return this;
     }

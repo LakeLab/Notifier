@@ -1,5 +1,8 @@
 package com.lakelab.notifier.impl;
 
+import android.app.PendingIntent;
+
+import androidx.annotation.DrawableRes;
 import androidx.annotation.IntDef;
 import androidx.annotation.NonNull;
 
@@ -43,4 +46,8 @@ public interface CompatOptionImpl extends ShowImpl {
     CompatOptionImpl setBadgeIconTypeFromAPI26(@IconType int iconType);
 
     CompatOptionImpl setShowWhenFromAPI17(boolean showWhen);
+
+    CompatOptionImpl addActionFromAPI16(@DrawableRes int icon,
+                                        CharSequence charSequence,
+                                        PendingIntent pendingIntent);
 }
