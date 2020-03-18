@@ -6,6 +6,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.net.Uri;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
@@ -14,7 +15,14 @@ public class ContextInjections extends ContentProvider {
     @SuppressLint("StaticFieldLeak")
     private static Context global;
 
+    static void injectContext(Context context) {
+        global = context;
+    }
+
     public static Context getApplicationContext() {
+        if (global == null) {
+            throw new ExceptionInInitializerError("Context is never injected. If your application isn't in main process, Inject context by injectContext method");
+        }
         return global;
     }
 

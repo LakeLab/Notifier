@@ -115,6 +115,11 @@ Notifier.with(DEFAULT_CHANNEL_ID)
         .show(NOTIFICATION_ID);
 ```
 
+## For multi process application
+If your application is executed without main process, Set Application context by setContext method **(DO NOT SET ACTIVITY CONTEXT)** before using other apis in Notifier.
+```java
+Notifier.setContext(context);
+``` 
 
 ## To do
 

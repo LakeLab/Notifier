@@ -3,7 +3,9 @@ package com.lakelab.notifier;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
+import android.content.Context;
 import android.os.Build;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.RequiresApi;
 
@@ -28,6 +30,11 @@ public final class Notifier {
 
     public static void deleteChannelDataForCompat(String channelId) {
         channels.remove(channelId);
+    }
+
+
+    public static void setContext(Context context) {
+        ContextInjections.injectContext(context);
     }
 
     @RequiresApi(26)
